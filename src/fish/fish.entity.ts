@@ -17,13 +17,14 @@ export class Fish extends BaseEntity implements FishInterface {
 
     @Column({
         length: 1000,
+        nullable: true,
     })
-    description: string;
+    description: string | null;
 
     @Column({
-        default: () => 'CURRENT_TIMESTAMP',
+        nullable: true,
     })
-    catchDateTime: Date;
+    catchDateTime: Date | null;
 
     @Column({
         type: 'float',
