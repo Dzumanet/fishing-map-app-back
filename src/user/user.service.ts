@@ -3,6 +3,7 @@ import {RegisterUserDto} from "./dto/register-user.dto";
 import {RegisterUserResponse} from "../types";
 import {User} from "./user.entity";
 import {Response} from 'express';
+import {hashPwd} from "../utils/hash-pwd";
 
 @Injectable()
 export class UserService {

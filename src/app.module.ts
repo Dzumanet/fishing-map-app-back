@@ -5,7 +5,10 @@ import {TypeOrmModule} from "@nestjs/typeorm";
 import {ConfigModule} from "@nestjs/config";
 import { UserModule } from './user/user.module';
 import { FishModule } from './fish/fish.module';
+import { AuthModule } from './auth/auth.module';
 import * as process from 'process';
+
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -23,6 +26,7 @@ import * as process from 'process';
     }),
     UserModule,
     FishModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
