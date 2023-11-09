@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { UserInterface } from '../types';
-import {Fish} from "../fish/fish.entity";
+import { Fish } from '../fish/fish.entity';
 
 @Entity()
 export class User extends BaseEntity implements UserInterface {
@@ -46,6 +46,6 @@ export class User extends BaseEntity implements UserInterface {
   })
   mainFishingSpotLon: number;
 
-  @OneToMany(type => Fish, fish => fish.user)
+  @OneToMany((type) => Fish, (fish) => fish.user)
   fish: Fish[];
 }

@@ -12,7 +12,7 @@ export interface RegisterUserResponse {
   userName: string;
 }
 
-export class RegisterUserDto {
+export interface RegisterUserDto {
   userName: string;
   pwd: string;
 }
