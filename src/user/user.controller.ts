@@ -1,7 +1,15 @@
-import { Body, Controller, Inject, Post, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  Post,
+  Res,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { RegisterUserDto } from './dto/register-user.dto';
-import { RegisterUserResponse } from '../types';
+import { RegisterUserResponse, UserInterface } from '../types';
 import { Response } from 'express';
 
 @Controller('user')
@@ -14,5 +22,10 @@ export class UserController {
     @Res() res: Response,
   ): Promise<RegisterUserResponse | Response> {
     return this.userService.registerUser(newUser, res);
+  }
+
+  @Get('/:id')
+  getOneFish(@Param('id') id: string): Promise<UserInterface> {
+    return this.userService.getOneUser(id);
   }
 }

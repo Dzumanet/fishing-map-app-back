@@ -29,13 +29,14 @@ export class FishService {
     createFish: CreateFishDto,
     user: User,
   ): Promise<CreateFishResponse> {
-    const { fishName, weight, lat, lon } = createFish;
+    const { fishName, weight, length, lat, lon } = createFish;
 
     if (
       typeof fishName !== 'string' ||
       typeof weight !== 'number' ||
       fishName === '' ||
       weight <= 0 ||
+      length <= 0 ||
       typeof lat !== 'number' ||
       typeof lon !== 'number'
     ) {
@@ -46,6 +47,7 @@ export class FishService {
 
     newFish.fishName = createFish.fishName;
     newFish.weight = createFish.weight;
+    newFish.length = createFish.length;
     newFish.description = createFish.description;
     newFish.catchDateTime = createFish.catchDateTime;
     newFish.lat = createFish.lat;
@@ -79,18 +81,25 @@ export class FishService {
     return fish;
   }
 
+  async getUserFish(userId: string): Promise<Fish[]> {
+    const user: RegisterUserResponse =
+      await this.userService.getOneUser(userId);
+    return Fish.find({
+      where: { user },
+    });
+  }
+
   async findAllFish(fishName: string): Promise<Fish> {
     return await Fish.findOne({
       where: { fishName },
     });
   }
 
-  async deleteFish(id: string) {
-    await Fish.delete(id);
-  }
-
-  async updateFish(id: string, updateFish: CreateFishDto): Promise<CreateFishResponse> {
-    const { fishName, weight, lat, lon } = updateFish;
+  async updateFish(
+    id: string,
+    updateFish: CreateFishDto,
+  ): Promise<CreateFishResponse> {
+    const { fishName, weight, length, lat, lon } = updateFish;
     const fish = await Fish.findOneOrFail({
       where: { id },
     });
@@ -104,6 +113,7 @@ export class FishService {
       typeof weight !== 'number' ||
       fishName === '' ||
       weight <= 0 ||
+      length <= 0 ||
       typeof lat !== 'number' ||
       typeof lon !== 'number'
     ) {
@@ -112,6 +122,7 @@ export class FishService {
 
     fish.fishName = updateFish.fishName;
     fish.weight = updateFish.weight;
+    fish.length = updateFish.length;
     fish.description = updateFish.description;
     fish.catchDateTime = updateFish.catchDateTime;
     fish.lat = updateFish.lat;
@@ -124,11 +135,16 @@ export class FishService {
     };
   }
 
-  async getUserFish(userId: string): Promise<Fish[]> {
-    const user: RegisterUserResponse =
-      await this.userService.getOneUser(userId);
-    return Fish.find({
-      where: { user },
+  async deleteFish(id: string) {
+    const fish = await Fish.findOne({
+      where: { id },
     });
+
+    if (fish) {
+      await fish.remove();
+      return {
+        success: true,
+      };
+    }
   }
 }

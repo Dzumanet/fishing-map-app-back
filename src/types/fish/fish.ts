@@ -2,6 +2,7 @@ export interface FishInterface {
   id: string;
   fishName: string;
   weight: number;
+  length: number;
   description: string;
   catchDateTime: Date;
   lat: number;

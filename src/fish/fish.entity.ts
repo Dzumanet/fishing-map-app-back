@@ -18,8 +18,15 @@ export class Fish extends BaseEntity implements FishInterface {
   })
   fishName: string;
 
-  @Column()
+  @Column({
+    type: 'smallint',
+  })
   weight: number;
+
+  @Column({
+    type: 'smallint',
+  })
+  length: number;
 
   @Column({
     length: 1000,

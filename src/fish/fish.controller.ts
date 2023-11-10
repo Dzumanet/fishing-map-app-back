@@ -53,12 +53,12 @@ export class FishController {
     return this.fishService.getUserFish(userId);
   }
 
-  @Get('/:id')
+  @Get('/one/:id')
   getOneFish(@Param('id') id: string): Promise<FishInterface> {
     return this.fishService.findOneFish(id);
   }
 
-  @Patch('/:id')
+  @Patch('/edit/:id')
   @UseGuards(AuthGuard('jwt'))
   updateFish(
     @Param('id') id: string,
@@ -67,7 +67,7 @@ export class FishController {
     return this.fishService.updateFish(id, updateFish);
   }
 
-  @Delete('/:id')
+  @Delete('/remove/:id')
   @UseGuards(AuthGuard('jwt'))
   deleteFish(@Param('id') id: string) {
     return this.fishService.deleteFish(id);
